@@ -22,6 +22,7 @@ const TransitionGroup = Radium(ReactTransitionGroup);
 
 @connect((state) => state)
 @withTheme
+@Radium
 export default class Manager extends Component {
   static displayName = "Manager";
 

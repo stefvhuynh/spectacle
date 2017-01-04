@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from "react";
 import { withTheme } from "styled-components";
 import Radium from "radium";
 
-@Radium
 @withTheme
+@Radium
 export default class Controls extends Component {
   static propTypes = {
     currentSlide: PropTypes.number,

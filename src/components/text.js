@@ -3,8 +3,8 @@ import { withTheme } from "styled-components";
 import { getStyles } from "../utils/base";
 import Radium from "radium";
 
-@Radium
 @withTheme
+@Radium
 export default class Text extends Component {
   static defaultProps = {
     lineHeight: 1
