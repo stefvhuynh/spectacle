@@ -66,6 +66,7 @@ export const getStyles = function getStyles() {
     textFont,
     textSize,
     textAlign,
+    theme,
     bgColor,
     bgImage,
     bgDarken,
@@ -94,19 +95,19 @@ export const getStyles = function getStyles() {
   }
   if (textColor) {
     let color = "";
-    if (!this.context.styles.colors.hasOwnProperty(textColor)) {
+    if (!theme.colors.hasOwnProperty(textColor)) {
       color = textColor;
     } else {
-      color = this.context.styles.colors[textColor];
+      color = theme.colors[textColor];
     }
     styles.color = color;
   }
   if (textFont) {
     let font = "";
-    if (!this.context.styles.fonts.hasOwnProperty(textFont)) {
+    if (!theme.fonts.hasOwnProperty(textFont)) {
       font = textFont;
     } else {
-      font = this.context.styles.fonts[textFont];
+      font = theme.fonts[textFont];
     }
     styles.fontFamily = font;
   }
@@ -125,10 +126,10 @@ export const getStyles = function getStyles() {
   }
   if (bgColor) {
     let color = "";
-    if (!this.context.styles.colors.hasOwnProperty(bgColor)) {
+    if (!theme.colors.hasOwnProperty(bgColor)) {
       color = bgColor;
     } else {
-      color = this.context.styles.colors[bgColor];
+      color = theme.colors[bgColor];
     }
     styles.backgroundColor = color;
   }
