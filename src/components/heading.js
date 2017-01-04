@@ -1,9 +1,31 @@
 import React, { Component, createElement, PropTypes } from "react";
+import { withTheme } from "styled-components";
 import { getStyles } from "../utils/base";
 import Radium from "radium";
 
 @Radium
+@withTheme
 export default class Heading extends Component {
+  static defaultProps = {
+    size: 1,
+    lineHeight: 1
+  }
+
+  static propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    fit: PropTypes.bool,
+    lineHeight: PropTypes.number,
+    size: PropTypes.number,
+    style: PropTypes.object,
+    theme: PropTypes.object
+  }
+
+  static contextTypes = {
+    store: PropTypes.object,
+    typeface: PropTypes.object
+  }
+
   constructor() {
     super();
     this.resize = this.resize.bind(this);
@@ -67,7 +89,7 @@ export default class Heading extends Component {
           className={this.props.className}
           ref={(c) => { this.containerRef = c; }}
           style={[
-            this.context.styles.components.heading[`h${size}`],
+            this.props.theme.components.heading[`h${size}`],
             getStyles.call(this), styles.container
           ]}
         >
@@ -78,29 +100,9 @@ export default class Heading extends Component {
       ) : (
         createElement(Tag, {
           className: this.props.className,
-          style: [this.context.styles.components.heading[`h${size}`], getStyles.call(this), styles.nonFit, style, typefaceStyle]
+          style: [this.props.theme.components.heading[`h${size}`], getStyles.call(this), styles.nonFit, style, typefaceStyle]
         }, children)
       )
     );
   }
 }
-
-Heading.defaultProps = {
-  size: 1,
-  lineHeight: 1
-};
-
-Heading.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  fit: PropTypes.bool,
-  lineHeight: PropTypes.number,
-  size: PropTypes.number,
-  style: PropTypes.object
-};
-
-Heading.contextTypes = {
-  styles: PropTypes.object,
-  store: PropTypes.object,
-  typeface: PropTypes.object
-};

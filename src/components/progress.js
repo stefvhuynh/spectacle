@@ -1,8 +1,17 @@
 import React, { Component, PropTypes } from "react";
+import { withTheme } from "styled-components";
 import Radium from "radium";
 
 @Radium
+@withTheme
 export default class Progress extends Component {
+  static propTypes = {
+    currentSlide: PropTypes.number,
+    items: PropTypes.array,
+    theme: PropTypes.object,
+    type: PropTypes.oneOf(["pacman", "bar", "number", "none"])
+  }
+
   getWidth() {
     return {
       width: `${(100 * this.props.currentSlide / (this.props.items.length - 1))}%`
@@ -34,7 +43,7 @@ export default class Progress extends Component {
 
   render() {
     const { type, currentSlide, items } = this.props;
-    let style = this.context.styles.progress;
+    let style = this.props.theme.progress;
     let markup;
     switch (type) {
       case "none":
@@ -80,13 +89,3 @@ export default class Progress extends Component {
     );
   }
 }
-
-Progress.propTypes = {
-  currentSlide: PropTypes.number,
-  items: PropTypes.array,
-  type: PropTypes.oneOf(["pacman", "bar", "number", "none"])
-};
-
-Progress.contextTypes = {
-  styles: PropTypes.object
-};

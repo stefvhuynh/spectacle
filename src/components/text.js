@@ -1,9 +1,26 @@
 import React, { Component, PropTypes } from "react";
+import { withTheme } from "styled-components";
 import { getStyles } from "../utils/base";
 import Radium from "radium";
 
 @Radium
+@withTheme
 export default class Text extends Component {
+  static defaultProps = {
+    lineHeight: 1
+  }
+  static propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    fit: PropTypes.bool,
+    lineHeight: PropTypes.number,
+    style: PropTypes.object,
+    theme: PropTypes.object
+  }
+  static contextTypes = {
+    store: PropTypes.object,
+    typeface: PropTypes.object
+  }
   constructor() {
     super();
     this.resize = this.resize.bind(this);
@@ -65,7 +82,7 @@ export default class Text extends Component {
         <div
           className={this.props.className}
           ref={(c) => { this.containerRef = c; }}
-          style={[this.context.styles.components.text, getStyles.call(this), styles.container]}
+          style={[this.props.theme.components.text, getStyles.call(this), styles.container]}
         >
           <span
             ref={(t) => { this.textRef = t; }}
@@ -75,7 +92,7 @@ export default class Text extends Component {
           </span>
         </div>
       ) : (
-        <p className={this.props.className} style={[this.context.styles.components.text, getStyles.call(this), styles.nonFit, style, typefaceStyle]}>
+        <p className={this.props.className} style={[this.props.theme.components.text, getStyles.call(this), styles.nonFit, style, typefaceStyle]}>
           {children}
         </p>
       )
@@ -83,20 +100,3 @@ export default class Text extends Component {
   }
 }
 
-Text.defaultProps = {
-  lineHeight: 1
-};
-
-Text.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  fit: PropTypes.bool,
-  lineHeight: PropTypes.number,
-  style: PropTypes.object
-};
-
-Text.contextTypes = {
-  styles: PropTypes.object,
-  store: PropTypes.object,
-  typeface: PropTypes.object
-};

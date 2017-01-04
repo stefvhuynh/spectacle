@@ -1,8 +1,13 @@
 import React, { Component, PropTypes } from "react";
+import { withTheme } from "styled-components";
 import Radium from "radium";
 
 @Radium
+@withTheme
 export default class Fullscreen extends Component {
+  static propTypes = {
+    theme: PropTypes.object
+  }
   constructor() {
     super(...arguments);
     this.handleToggleFullScreen = this.handleToggleFullScreen.bind(this);
@@ -44,7 +49,7 @@ export default class Fullscreen extends Component {
     return (
       <svg
         onClick={this.handleToggleFullScreen}
-        style={[styles, this.context.styles.fullscreen]}
+        style={[styles, this.props.theme.fullscreen]}
         width="30px"
         height="30px"
         viewBox="0 0 512 512"
@@ -56,7 +61,3 @@ export default class Fullscreen extends Component {
     );
   }
 }
-
-Fullscreen.contextTypes = {
-  styles: PropTypes.object
-};
