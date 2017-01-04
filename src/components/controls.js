@@ -1,21 +1,31 @@
 import React, { Component, PropTypes } from "react";
+import { withTheme } from "styled-components";
 import Radium from "radium";
 
 @Radium
+@withTheme
 export default class Controls extends Component {
+  static propTypes = {
+    currentSlide: PropTypes.number,
+    onNext: PropTypes.func,
+    onPrev: PropTypes.func,
+    totalSlides: PropTypes.number
+  }
+
   render() {
+    const { currentSlide, onNext, onPrev, theme } = this.props;
     return (
       <div>
-        {this.props.currentSlide !== 0 &&
+        {currentSlide !== 0 &&
           <button
             type="button"
             key="prev"
-            onClick={this.props.onPrev}
-            style={this.context.styles.controls.prev}
+            onClick={onPrev}
+            style={theme.controls.prev}
           >
             <svg
               key="prevIcon"
-              style={this.context.styles.controls.prevIcon}
+              style={theme.controls.prevIcon}
               width="32px"
               height="32px"
               viewBox="0 0 512 828.586"
@@ -27,12 +37,12 @@ export default class Controls extends Component {
           <button
             type="button"
             key="next"
-            onClick={this.props.onNext}
-            style={this.context.styles.controls.next}
+            onClick={onNext}
+            style={theme.controls.next}
           >
             <svg
               key="nextIcon"
-              style={this.context.styles.controls.nextIcon}
+              style={theme.controls.nextIcon}
               width="32px"
               height="32px"
               viewBox="0 0 512 828.586"
@@ -44,14 +54,3 @@ export default class Controls extends Component {
     );
   }
 }
-
-Controls.propTypes = {
-  currentSlide: PropTypes.number,
-  onNext: PropTypes.func,
-  onPrev: PropTypes.func,
-  totalSlides: PropTypes.number
-};
-
-Controls.contextTypes = {
-  styles: PropTypes.object
-};
