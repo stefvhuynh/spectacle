@@ -1,19 +1,55 @@
 import React, { Component, PropTypes } from "react";
+import { withTheme } from "styled-components";
 import isUndefined from "lodash/isUndefined";
 import { getStyles } from "../utils/base";
 import Radium from "radium";
 import { addFragment } from "../actions";
 import { Transitionable, renderTransition } from "./transitionable";
 
+@withTheme
 @Transitionable
 @Radium
-class Slide extends Component {
+export default class Slide extends Component {
+  static defaultProps = {
+    align: "center center",
+    presenterStyle: {},
+    style: {},
+    viewerScaleMode: false
+  }
+
+  static propTypes = {
+    align: PropTypes.string,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    dispatch: PropTypes.func,
+    export: PropTypes.bool,
+    hash: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    lastSlide: PropTypes.number,
+    margin: PropTypes.number,
+    maxHeight: PropTypes.number,
+    maxWidth: PropTypes.number,
+    notes: PropTypes.any,
+    presenterStyle: PropTypes.object,
+    print: PropTypes.bool,
+    slideIndex: PropTypes.number,
+    style: PropTypes.object,
+    theme: PropTypes.object,
+    viewerScaleMode: PropTypes.bool
+  }
+
+  static contextTypes = {
+    export: PropTypes.bool,
+    print: PropTypes.object,
+    overview: PropTypes.bool,
+    store: PropTypes.object
+  }
+
   state = {
     contentScale: 1,
     transitioning: true,
     z: 1,
     zoom: 1
-  };
+  }
 
   componentDidMount() {
     this.setZoom();
@@ -74,8 +110,8 @@ class Slide extends Component {
         height: "100%",
         display: "flex",
         overflow: "hidden",
-        backgroundColor: this.context.styles.global.body.background ?
-          this.context.styles.global.body.background : "",
+        backgroundColor: this.props.theme.global.body.background ?
+          this.props.theme.global.body.background : "",
         ...this.props.style
       },
       inner: {
@@ -136,7 +172,7 @@ class Slide extends Component {
             className={`${contentClass} spectacle-content`}
             style={[
               styles.content,
-              this.context.styles.components.content,
+              this.props.theme.components.content,
               this.context.overview && overViewStyles.content
             ]}
           >
@@ -147,39 +183,3 @@ class Slide extends Component {
     );
   }
 }
-
-Slide.defaultProps = {
-  align: "center center",
-  presenterStyle: {},
-  style: {},
-  viewerScaleMode: false
-};
-
-Slide.propTypes = {
-  align: PropTypes.string,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  dispatch: PropTypes.func,
-  export: PropTypes.bool,
-  hash: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  lastSlide: PropTypes.number,
-  margin: PropTypes.number,
-  maxHeight: PropTypes.number,
-  maxWidth: PropTypes.number,
-  notes: PropTypes.any,
-  presenterStyle: PropTypes.object,
-  print: PropTypes.bool,
-  slideIndex: PropTypes.number,
-  style: PropTypes.object,
-  viewerScaleMode: PropTypes.bool
-};
-
-Slide.contextTypes = {
-  styles: PropTypes.object,
-  export: PropTypes.bool,
-  print: PropTypes.object,
-  overview: PropTypes.bool,
-  store: PropTypes.object
-};
-
-export default Slide;
