@@ -18,14 +18,14 @@ export default class Controller extends Component {
         {({ history, location }) => {
           const printEnabled = location.search.indexOf("print") !== -1;
           return (
-            <ThemeProvider theme={printEnabled ? styles.print : styles.screen}>
-              <Context
-                store={this.props.store}
-                history={history}
-              >
+            <Context
+              store={this.props.store}
+              history={history}
+            >
+              <ThemeProvider theme={printEnabled ? styles.print : styles.screen}>
                 {this.props.children}
-              </Context>
-            </ThemeProvider>
+              </ThemeProvider>
+            </Context>
           );
         }}
       </History>
