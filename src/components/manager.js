@@ -2,6 +2,7 @@
 /* eslint react/no-did-mount-set-state: 0 */
 
 import React, { Children, cloneElement, Component, PropTypes } from "react";
+import { withTheme } from "styled-components";
 import ReactTransitionGroup from "react-addons-transition-group";
 import Radium, { Style } from "radium";
 import filter from "lodash/filter";
@@ -20,7 +21,7 @@ import Controls from "./controls";
 const TransitionGroup = Radium(ReactTransitionGroup);
 
 @connect((state) => state)
-@Radium
+@withTheme
 export default class Manager extends Component {
   static displayName = "Manager";
 
@@ -39,12 +40,12 @@ export default class Manager extends Component {
     globalStyles: PropTypes.bool,
     progress: PropTypes.oneOf(["pacman", "bar", "number", "none"]),
     route: PropTypes.object,
+    theme: PropTypes.object,
     transition: PropTypes.array,
     transitionDuration: PropTypes.number
   };
 
   static contextTypes = {
-    styles: PropTypes.object,
     print: PropTypes.object,
     history: PropTypes.object,
     presenter: PropTypes.bool,
@@ -348,7 +349,7 @@ export default class Manager extends Component {
   }
   render() {
     const globals = this.props.route.params.indexOf("export") !== -1 ? {
-      body: Object.assign(this.context.styles.global.body, {
+      body: Object.assign(this.props.theme.global.body, {
         minWidth: 1100,
         minHeight: 850,
         overflow: "auto"
@@ -410,7 +411,7 @@ export default class Manager extends Component {
       this.props.route.params.indexOf("overview") === -1 &&
       this.props.route.params.indexOf("presenter") === -1;
 
-    const { googleFonts = {} } = this.context.styles;
+    const { googleFonts = {} } = this.props.theme;
     const googleFontsElements = Object.keys(googleFonts).map((key, index) => (
       <Typeface
         googleFont={googleFonts[key].name}
@@ -451,7 +452,7 @@ export default class Manager extends Component {
            <Fullscreen/> : ""
         }
 
-        {this.props.globalStyles && <Style rules={Object.assign(this.context.styles.global, globals)} />}
+        {this.props.globalStyles && <Style rules={Object.assign(this.props.theme.global, globals)} />}
       </div>
     );
   }

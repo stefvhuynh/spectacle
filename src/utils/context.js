@@ -7,10 +7,8 @@ class Context extends Component {
     children: PropTypes.node,
     history: PropTypes.object,
     store: PropTypes.object,
-    styles: PropTypes.object
   };
   static childContextTypes = {
-    styles: PropTypes.object,
     history: PropTypes.object,
     store: PropTypes.object
   };
@@ -20,10 +18,9 @@ class Context extends Component {
     this._handleLocationChange(this.props);
   }
   getChildContext() {
-    const { history, styles, store } = this.props;
+    const { history, store } = this.props;
     return {
       history,
-      styles,
       store
     };
   }

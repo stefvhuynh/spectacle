@@ -23,11 +23,28 @@ export default class Deck extends Component {
   };
 
   render() {
+    const {
+      children,
+      controls,
+      globalStyles,
+      history,
+      progress,
+      theme,
+      transition,
+      transitionDuration
+    } = this.props;
+
     return (
       <Provider store={store}>
-        <Controller theme={this.props.theme} store={store} history={this.props.history}>
-          <Manager {...this.props}>
-            {this.props.children}
+        <Controller theme={theme} store={store} history={history}>
+          <Manager
+            controls={controls}
+            globalStyles={globalStyles}
+            progress={progress}
+            transition={transition}
+            transitionDuration={transitionDuration}
+          >
+            {children}
           </Manager>
         </Controller>
       </Provider>

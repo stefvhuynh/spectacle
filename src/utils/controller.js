@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react";
+import { ThemeProvider } from "styled-components";
 import History from "react-history/HashHistory";
 
 import theme from "../themes/default";
@@ -17,13 +18,14 @@ export default class Controller extends Component {
         {({ history, location }) => {
           const printEnabled = location.search.indexOf("print") !== -1;
           return (
-            <Context
-              store={this.props.store}
-              history={history}
-              styles={printEnabled ? styles.print : styles.screen}
-            >
-              {this.props.children}
-            </Context>
+            <ThemeProvider theme={printEnabled ? styles.print : styles.screen}>
+              <Context
+                store={this.props.store}
+                history={history}
+              >
+                {this.props.children}
+              </Context>
+            </ThemeProvider>
           );
         }}
       </History>
